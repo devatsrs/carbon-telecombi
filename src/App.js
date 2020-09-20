@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import LoginLayout from "./components/Layouts/LoginLayout";
 import DashboardLayout from "./components/Layouts/DashboardLayout";
 

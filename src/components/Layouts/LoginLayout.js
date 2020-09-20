@@ -1,4 +1,4 @@
-import React, { Component, Children } from "react";
+import React, { Component } from "react";
 
 import {
   Content,
@@ -18,8 +18,8 @@ export default class LoginLayout extends Component {
           <HeaderMenuButton
             aria-label="Open menu"
 
-            // onClick={onClickSideNavExpand}
-            // isActive={isSideNavExpanded}
+          // onClick={onClickSideNavExpand}
+          // isActive={isSideNavExpanded}
           />
           <HeaderName href="#" prefix="IBM">
             [Company Name]
