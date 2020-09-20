@@ -1,11 +1,12 @@
-import {
+import
+{
   DataTable, Table, TableBody, TableCell, TableContainer, TableHead, TableHeader, TableRow, TableToolbarContent, TableToolbarMenu, TableToolbarSearch,
 
 
   TableBatchAction,
   TableBatchActions,
   TableToolbar,
-  TableToolbarAction, Button, TableSelectAll, TableSelectRow
+  TableToolbarAction, Button, TableSelectAll, TableSelectRow, OverflowMenu, OverflowMenuItem
 
 } from "carbon-components-react";
 import React, { Component } from "react";
@@ -22,14 +23,17 @@ import React, { Component } from "react";
  * https://react.carbondesignsystem.com/?path=/docs/datatable-batch-actions--usage
  * https://www.carbondesignsystem.com/components/data-table/usage/
  */
-import {
+import
+{
   Delete16 as Delete,
   Save16 as Save,
   Download16 as Download,
 } from '@carbon/icons-react';
 
-export default class Accounts extends Component {
-  constructor(props) {
+export default class Accounts extends Component
+{
+  constructor( props )
+  {
     super();
 
     this.setState(
@@ -113,28 +117,32 @@ export default class Accounts extends Component {
       key: 'status',
       header: 'Status',
     },
+
   ];
 
-  action(msg) {
+  action ( msg )
+  {
     // alert(msg);
   }
-  batchActionClick(msg) {
+  batchActionClick ( msg )
+  {
     //alert(msg);
   }
 
-  render() {
+  render ()
+  {
 
 
     return (
       <div className="bx--grid">
         <div className="bx--row">
           <div className="bx--col-lg-12 ">
-            <h2 style={{ fontWeight: "800", margin: "0 0", fontSize: "20px" }}>
+            <h2 style={ { fontWeight: "800", margin: "0 0", fontSize: "20px" } }>
               Accounts
             </h2>
 
-            <DataTable rows={this.rowData} headers={this.headerData}>
-              {({
+            <DataTable rows={ this.rowData } headers={ this.headerData } isSortable  >
+              { ( {
                 rows,
                 headers,
                 getHeaderProps,
@@ -146,84 +154,101 @@ export default class Accounts extends Component {
                 selectedRows,
                 getTableProps,
                 getTableContainerProps,
-              }) => (
+              } ) => (
                   <TableContainer
-                    title="DataTable"
-                    description="With batch actions"
-                    {...getTableContainerProps()}>
-                    <TableToolbar {...getToolbarProps()}>
-                      <TableBatchActions {...getBatchActionProps()}>
+                    title=""
+                    description=""
+                    { ...getTableContainerProps() }>
+                    <TableToolbar { ...getToolbarProps() }>
+                      <TableBatchActions { ...getBatchActionProps() }>
                         <TableBatchAction
-                          tabIndex={getBatchActionProps().shouldShowBatchActions ? 0 : -1}
-                          renderIcon={Delete}
-                          onClick={this.batchActionClick(selectedRows)}>
-                          Delete
-          </TableBatchAction>
+                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? 0 : -1 }
+                          renderIcon={ Delete }
+                          onClick={ this.batchActionClick( selectedRows ) }>
+                          Delete          </TableBatchAction>
                         <TableBatchAction
-                          tabIndex={getBatchActionProps().shouldShowBatchActions ? 0 : -1}
-                          renderIcon={Save}
-                          onClick={this.batchActionClick(selectedRows)}>
-                          Save
-          </TableBatchAction>
+                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? 0 : -1 }
+                          renderIcon={ Save }
+                          onClick={ this.batchActionClick( selectedRows ) }>
+                          Save          </TableBatchAction>
                         <TableBatchAction
-                          tabIndex={getBatchActionProps().shouldShowBatchActions ? 0 : -1}
-                          renderIcon={Download}
-                          onClick={this.batchActionClick(selectedRows)}>
-                          Download
-          </TableBatchAction>
+                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? 0 : -1 }
+                          renderIcon={ Download }
+                          onClick={ this.batchActionClick( selectedRows ) }>
+                          Download          </TableBatchAction>
                       </TableBatchActions>
                       <TableToolbarContent>
                         <TableToolbarSearch
                           defaultExpanded
-                          tabIndex={getBatchActionProps().shouldShowBatchActions ? -1 : 0}
-                          onChange={onInputChange}
+                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? -1 : 0 }
+                          onChange={ onInputChange }
                         />
                         <TableToolbarMenu
-                          tabIndex={getBatchActionProps().shouldShowBatchActions ? -1 : 0}>
-                          <TableToolbarAction primaryFocus onClick={() => alert('Alert 1')}>
-                            Action 1
-            </TableToolbarAction>
-                          <TableToolbarAction onClick={() => alert('Alert 2')}>
-                            Action 2
-            </TableToolbarAction>
-                          <TableToolbarAction onClick={() => alert('Alert 3')}>
-                            Action 3
-            </TableToolbarAction>
+                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? -1 : 0 }>
+                          <TableToolbarAction primaryFocus onClick={ () => alert( 'Alert 1' ) }>                            Action 1            </TableToolbarAction>
+                          <TableToolbarAction onClick={ () => alert( 'Alert 2' ) }>                            Action 2            </TableToolbarAction>
+                          <TableToolbarAction onClick={ () => alert( 'Alert 3' ) }>Action 3</TableToolbarAction>
                         </TableToolbarMenu>
                         <Button
-                          tabIndex={getBatchActionProps().shouldShowBatchActions ? -1 : 0}
-                          onClick={this.action('Add new row')}
+                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? -1 : 0 }
+                          onClick={ this.action( 'Add new row' ) }
                           size="small"
                           kind="primary">
                           Add new
-          </Button>
+                        </Button>
                       </TableToolbarContent>
                     </TableToolbar>
-                    <Table {...getTableProps()}>
+                    <Table { ...getTableProps() }>
                       <TableHead>
+
+
                         <TableRow>
-                          <TableSelectAll {...getSelectionProps()} />
-                          {headers.map((header, i) => (
-                            <TableHeader key={i} {...getHeaderProps({ header })}>
-                              {header.header}
+                          <TableSelectAll { ...getSelectionProps() } />
+                          { headers.map( ( header, i ) => (
+                            <TableHeader key={ i } { ...getHeaderProps( { header } ) }>
+                              {header.header }
                             </TableHeader>
-                          ))}
+                          ) ) }
+                          <TableHeader />
                         </TableRow>
+
                       </TableHead>
                       <TableBody>
-                        {rows.map((row, i) => (
-                          <TableRow key={i} {...getRowProps({ row })}>
-                            <TableSelectRow {...getSelectionProps({ row })} />
-                            {row.cells.map((cell) => (
-                              <TableCell key={cell.id}>{cell.value}</TableCell>
-                            ))}
+                        { rows.map( ( row, i ) => (
+                          <TableRow key={ i } { ...getRowProps( { row } ) }>
+                            <TableSelectRow { ...getSelectionProps( { row } ) } />
+                            {row.cells.map( ( cell ) => (
+                              <TableCell key={ cell.id }>{ cell.value }</TableCell>
+                            ) ) }
+                            <TableCell className="bx--table-column-menu">
+
+                              <OverflowMenu>
+                                <OverflowMenuItem
+                                  itemText="Option 1"
+                                  primaryFocus
+                                />
+                                <OverflowMenuItem
+                                  itemText="Option 2 is an example of a really long string and how we recommend handling this"
+                                  requireTitle
+                                />
+                                <OverflowMenuItem itemText="Option 3" />
+                                <OverflowMenuItem itemText="Option 4" hasDivider />
+                              </OverflowMenu>
+
+                            </TableCell>
+
                           </TableRow>
-                        ))}
+                        ) ) }
                       </TableBody>
                     </Table>
                   </TableContainer>
-                )}
+                ) }
             </DataTable>
+
+
+
+
+
 
           </div>
         </div>
