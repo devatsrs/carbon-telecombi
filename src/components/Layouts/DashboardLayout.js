@@ -5,12 +5,11 @@ import {
   HeaderMenuButton,
   HeaderName,
   HeaderNavigation,
-  HeaderMenu,
   HeaderMenuItem,
   HeaderGlobalBar,
   HeaderGlobalAction,
   SkipToContent,
-  Content
+  Content,
 } from "carbon-components-react";
 
 import { Search20, Notification20, AppSwitcher20 } from "@carbon/icons-react";
@@ -18,7 +17,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import { Route, Switch } from "react-router-dom";
 import Accounts from "../Accounts";
 import Sidebar from "../Sidebar/Sidebar";
-
+import { header_bar_links } from "../../helper/header_bar_links";
 
 export default class DashboardLayout extends Component {
   constructor(props) {
@@ -34,13 +33,11 @@ export default class DashboardLayout extends Component {
     if (useResponsiveOffset) {
       content_style.width = "100%";
     }
-
   }
 
   onClickSideNavExpand = () => {
     this.setState({ isSideNavExpanded: !this.state.isSideNavExpanded });
   };
-
 
   render(props) {
     return (
@@ -57,15 +54,13 @@ export default class DashboardLayout extends Component {
             [Platform]
           </HeaderName>
           <HeaderNavigation aria-label="IBM [Platform]">
-            <HeaderMenuItem href="#">Link 1</HeaderMenuItem>
-            <HeaderMenuItem href="#">Link 2</HeaderMenuItem>
-            <HeaderMenuItem href="#">Link 3</HeaderMenuItem>
-            <HeaderMenu aria-label="Link 4">
-              <HeaderMenuItem href="#">Sub-link 1</HeaderMenuItem>
-              <HeaderMenuItem href="#">Sub-link 2</HeaderMenuItem>
-              <HeaderMenuItem href="#">Sub-link 3</HeaderMenuItem>
-            </HeaderMenu>
+            {header_bar_links.map((item, i) => (
+              <HeaderMenuItem key={i} href={item.link}>
+                {item.title}
+              </HeaderMenuItem>
+            ))}
           </HeaderNavigation>
+
           <HeaderGlobalBar>
             <HeaderGlobalAction
               aria-label="Search"
@@ -87,7 +82,9 @@ export default class DashboardLayout extends Component {
             </HeaderGlobalAction>
           </HeaderGlobalBar>
         </Header>
-        <aside className="bx--side-nav"><Sidebar isSideNavExpanded={this.state.isSideNavExpanded}></Sidebar></aside>
+        <aside className="bx--side-nav">
+          <Sidebar isSideNavExpanded={this.state.isSideNavExpanded}></Sidebar>
+        </aside>
         <Content id="main-content" style={this.content_style}>
           <Switch>
             <Route
@@ -102,10 +99,9 @@ export default class DashboardLayout extends Component {
             />
             <Route
               exact
-              path="/account"
+              path="/accounts"
               render={(props) => <Accounts {...props} />}
             />
-
           </Switch>
         </Content>
       </>

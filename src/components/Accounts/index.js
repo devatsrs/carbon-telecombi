@@ -1,21 +1,34 @@
-import
-{
-  DataTable, Table, TableBody, TableCell, TableContainer, TableHead, TableHeader, TableRow, TableToolbarContent, TableToolbarMenu, TableToolbarSearch,
-
-
+import {
+  DataTable,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableToolbarContent,
+  TableToolbarMenu,
+  TableToolbarSearch,
   TableBatchAction,
   TableBatchActions,
   TableToolbar,
-  TableToolbarAction, Button, TableSelectAll, TableSelectRow, OverflowMenu, OverflowMenuItem
-
+  TableToolbarAction,
+  Button,
+  TableSelectAll,
+  TableSelectRow,
+  OverflowMenu,
+  OverflowMenuItem,
+  Pagination,
 } from "carbon-components-react";
 import React, { Component } from "react";
 //import { this.batchActionClick, rows, headers } from './shared';
-
-
+import accounts_data from "../../helper/faker/accounts";
+import faker from "faker";
+import DataTableContainer from "../DataTableContainer";
 /**
- * 
- * 
+ *
+ *
  * https://github.com/carbon-design-system/carbon-components-react/blob/master/src/components/DataTable/stories/shared.js
  * https://themes.carbondesignsystem.com/component/ui-shell--navigation-with-no-icons.html
  * https://themes.carbondesignsystem.com/?nav=data-table
@@ -23,126 +36,70 @@ import React, { Component } from "react";
  * https://react.carbondesignsystem.com/?path=/docs/datatable-batch-actions--usage
  * https://www.carbondesignsystem.com/components/data-table/usage/
  */
-import
-{
+import {
   Delete16 as Delete,
   Save16 as Save,
   Download16 as Download,
-} from '@carbon/icons-react';
+} from "@carbon/icons-react";
 
-export default class Accounts extends Component
-{
-  constructor( props )
-  {
+export default class Accounts extends Component {
+  constructor(props) {
     super();
-
-    this.setState(
-      {
-        rowData: [{
-          "id": 1,
-          "name": "Load Balancer 1	",
-          "protocol": "Http	",
-        }],
-        headerData: [
-          "Name",
-          "Protocol",
-        ]
-
-      },
-    );
-
-    // this.state.rowData = [{
-    //   "id": 1,
-    //   "name": "Load Balancer 1	",
-    //   "protocol": "Http	",
-    // }];
-    // this.state.headerData = [
-    //   "Name",
-    //   "Protocol",
-    // ];
-
   }
-  rowData = [
-    {
-      id: 'a',
-      name: 'Load Balancer 3',
-      protocol: 'HTTP',
-      port: 3000,
-      rule: 'Round robin',
-      attached_groups: 'Kevins VM Groups',
-      status: 'Disabled',
-    },
-    {
-      id: 'b',
-      name: 'Load Balancer 1',
-      protocol: 'HTTP',
-      port: 443,
-      rule: 'Round robin',
-      attached_groups: 'Maureens VM Groups',
-      status: 'Starting',
-    },
-    {
-      id: 'c',
-      name: 'Load Balancer 2',
-      protocol: 'HTTP',
-      port: 80,
-      rule: 'DNS delegation',
-      attached_groups: 'Andrews VM Groups',
-      status: 'Active',
-    },
-  ];
+  state = {
+    rowData: [],
+    headerData: [],
+    paginationPage: 1,
+    paginationPageSize: 10,
+  };
 
-  headerData = [
-    {
-      key: 'name',
-      header: 'Name',
-    },
-    {
-      key: 'protocol',
-      header: 'Protocol',
-    },
-    {
-      key: 'port',
-      header: 'Port',
-    },
-    {
-      key: 'rule',
-      header: 'Rule',
-    },
-    {
-      key: 'attached_groups',
-      header: 'Attached Groups',
-    },
-    {
-      key: 'status',
-      header: 'Status',
-    },
+  componentDidMount() {
+    let headerData = [];
+    Object.entries(accounts_data[0]).forEach(([key, value]) => {
+      headerData.push({ key: key, header: key });
+    });
 
-  ];
-
-  action ( msg )
-  {
+    this.setState({ rowData: accounts_data, headerData: headerData });
+  }
+  action(msg) {
     // alert(msg);
   }
-  batchActionClick ( msg )
-  {
+  batchActionClick(msg) {
     //alert(msg);
   }
 
-  render ()
-  {
+  handlePaginationChange = (e) => {
+    this.setState({
+      paginationPage: e.page,
+    });
+  };
 
+  render() {
+    //console.log(accounts_data);
+    //    console.log(accounts_data[0]);
 
     return (
       <div className="bx--grid">
         <div className="bx--row">
           <div className="bx--col-lg-12 ">
-            <h2 style={ { fontWeight: "800", margin: "0 0", fontSize: "20px" } }>
+            <h2 style={{ fontWeight: "800", margin: "0 0", fontSize: "20px" }}>
               Accounts
             </h2>
-
-            <DataTable rows={ this.rowData } headers={ this.headerData } isSortable  >
-              { ( {
+            {/* <DataTableContainer
+              rows={this.state.rowData}
+              headers={this.state.headerData}
+              page={1}
+              pageSize={10}
+              isSortable={true}
+            ></DataTableContainer> */}
+            <DataTable
+              rows={this.state.rowData}
+              headers={this.state.headerData}
+              page={1}
+              pageSize={10}
+              isSortable
+            >
+              {({
                 rows,
                 headers,
                 getHeaderProps,
@@ -154,102 +111,180 @@ export default class Accounts extends Component
                 selectedRows,
                 getTableProps,
                 getTableContainerProps,
-              } ) => (
-                  <TableContainer
-                    title=""
-                    description=""
-                    { ...getTableContainerProps() }>
-                    <TableToolbar { ...getToolbarProps() }>
-                      <TableBatchActions { ...getBatchActionProps() }>
-                        <TableBatchAction
-                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? 0 : -1 }
-                          renderIcon={ Delete }
-                          onClick={ this.batchActionClick( selectedRows ) }>
-                          Delete          </TableBatchAction>
-                        <TableBatchAction
-                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? 0 : -1 }
-                          renderIcon={ Save }
-                          onClick={ this.batchActionClick( selectedRows ) }>
-                          Save          </TableBatchAction>
-                        <TableBatchAction
-                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? 0 : -1 }
-                          renderIcon={ Download }
-                          onClick={ this.batchActionClick( selectedRows ) }>
-                          Download          </TableBatchAction>
-                      </TableBatchActions>
-                      <TableToolbarContent>
-                        <TableToolbarSearch
-                          defaultExpanded
-                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? -1 : 0 }
-                          onChange={ onInputChange }
-                        />
-                        <TableToolbarMenu
-                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? -1 : 0 }>
-                          <TableToolbarAction primaryFocus onClick={ () => alert( 'Alert 1' ) }>                            Action 1            </TableToolbarAction>
-                          <TableToolbarAction onClick={ () => alert( 'Alert 2' ) }>                            Action 2            </TableToolbarAction>
-                          <TableToolbarAction onClick={ () => alert( 'Alert 3' ) }>Action 3</TableToolbarAction>
-                        </TableToolbarMenu>
-                        <Button
-                          tabIndex={ getBatchActionProps().shouldShowBatchActions ? -1 : 0 }
-                          onClick={ this.action( 'Add new row' ) }
-                          size="small"
-                          kind="primary">
-                          Add new
-                        </Button>
-                      </TableToolbarContent>
-                    </TableToolbar>
-                    <Table { ...getTableProps() }>
-                      <TableHead>
 
+                // got from state
+                paginationPage,
+                paginationPageSize,
 
-                        <TableRow>
-                          <TableSelectAll { ...getSelectionProps() } />
-                          { headers.map( ( header, i ) => (
-                            <TableHeader key={ i } { ...getHeaderProps( { header } ) }>
-                              {header.header }
-                            </TableHeader>
-                          ) ) }
-                          <TableHeader />
+                getPaginationProps = () => {
+                  const { paginationPage, paginationPageSize } = this.state;
+
+                  return {
+                    page: paginationPage,
+                    pageSize: paginationPageSize,
+                    //onChange: this.handlePaginationChange,
+                  };
+                },
+                getCurrentPageRows = (rows) => {
+                  let lastItemIndex = 0;
+
+                  let { paginationPage, paginationPageSize } = this.state;
+
+                  if (
+                    paginationPage === 1 ||
+                    rows.length <= paginationPageSize
+                  ) {
+                    lastItemIndex = paginationPageSize;
+                    paginationPage = 1;
+                  } else {
+                    lastItemIndex = paginationPageSize * paginationPage;
+                  }
+                  // If lastItemIndex is larger than rows.length, it wont break
+                  // It will just go to the end of the array
+
+                  console.log("paginationPage " + paginationPage);
+                  console.log("paginationPageSize " + paginationPageSize);
+
+                  console.log("lastItemIndex " + lastItemIndex);
+                  console.log("rows " + rows.length);
+
+                  return rows.slice(
+                    (paginationPage - 1) * paginationPageSize,
+                    lastItemIndex
+                  );
+                },
+              }) => (
+                <TableContainer
+                  title=""
+                  description=""
+                  {...getTableContainerProps()}
+                >
+                  <TableToolbar {...getToolbarProps()}>
+                    <TableBatchActions {...getBatchActionProps()}>
+                      <TableBatchAction
+                        tabIndex={
+                          getBatchActionProps().shouldShowBatchActions ? 0 : -1
+                        }
+                        renderIcon={Delete}
+                        onClick={this.batchActionClick(selectedRows)}
+                      >
+                        Delete{" "}
+                      </TableBatchAction>
+                      <TableBatchAction
+                        tabIndex={
+                          getBatchActionProps().shouldShowBatchActions ? 0 : -1
+                        }
+                        renderIcon={Save}
+                        onClick={this.batchActionClick(selectedRows)}
+                      >
+                        Save{" "}
+                      </TableBatchAction>
+                      <TableBatchAction
+                        tabIndex={
+                          getBatchActionProps().shouldShowBatchActions ? 0 : -1
+                        }
+                        renderIcon={Download}
+                        onClick={this.batchActionClick(selectedRows)}
+                      >
+                        Download{" "}
+                      </TableBatchAction>
+                    </TableBatchActions>
+                    <TableToolbarContent>
+                      <TableToolbarSearch
+                        defaultExpanded
+                        tabIndex={
+                          getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                        }
+                        onChange={onInputChange}
+                      />
+                      <TableToolbarMenu
+                        tabIndex={
+                          getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                        }
+                      >
+                        <TableToolbarAction onClick={() => alert("Alert 1")}>
+                          {" "}
+                          Action 1{" "}
+                        </TableToolbarAction>
+                        <TableToolbarAction onClick={() => alert("Alert 2")}>
+                          {" "}
+                          Action 2{" "}
+                        </TableToolbarAction>
+                        <TableToolbarAction onClick={() => alert("Alert 3")}>
+                          Action 3
+                        </TableToolbarAction>
+                      </TableToolbarMenu>
+                      <Button
+                        tabIndex={
+                          getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                        }
+                        onClick={this.action("Add new row")}
+                        size="small"
+                        kind="primary"
+                      >
+                        Add new
+                      </Button>
+                    </TableToolbarContent>
+                  </TableToolbar>
+                  <Table {...getTableProps()}>
+                    <TableHead>
+                      <TableRow>
+                        <TableSelectAll {...getSelectionProps()} />
+                        {headers.map((header, i) => (
+                          <TableHeader key={i} {...getHeaderProps({ header })}>
+                            {header.header}
+                          </TableHeader>
+                        ))}
+                        <TableHeader />
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {getCurrentPageRows(rows).map((row, i) => (
+                        <TableRow key={i} {...getRowProps({ row })}>
+                          <TableSelectRow {...getSelectionProps({ row })} />
+                          {row.cells.map((cell) => (
+                            <TableCell key={cell.id}>{cell.value}</TableCell>
+                          ))}
+                          <TableCell className="bx--table-column-menu">
+                            <OverflowMenu>
+                              <OverflowMenuItem itemText="Option 1" />
+                              <OverflowMenuItem
+                                itemText="Option 2 is an example of a really long string and how we recommend handling this"
+                                requireTitle
+                              />
+                              <OverflowMenuItem itemText="Option 3" />
+                              <OverflowMenuItem
+                                itemText="Option 4"
+                                hasDivider
+                              />
+                            </OverflowMenu>
+                          </TableCell>
                         </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                  <Pagination
+                    // {...getPaginationProps}
+                    page={this.state.paginationPage}
+                    pageSize={10}
+                    pageSizes={[10, 20, 30, 40, 50]}
+                    totalItems={rows.length}
+                    onChange={(event) => this.handlePaginationChange(event)}
+                  />
 
-                      </TableHead>
-                      <TableBody>
-                        { rows.map( ( row, i ) => (
-                          <TableRow key={ i } { ...getRowProps( { row } ) }>
-                            <TableSelectRow { ...getSelectionProps( { row } ) } />
-                            {row.cells.map( ( cell ) => (
-                              <TableCell key={ cell.id }>{ cell.value }</TableCell>
-                            ) ) }
-                            <TableCell className="bx--table-column-menu">
-
-                              <OverflowMenu>
-                                <OverflowMenuItem
-                                  itemText="Option 1"
-                                  primaryFocus
-                                />
-                                <OverflowMenuItem
-                                  itemText="Option 2 is an example of a really long string and how we recommend handling this"
-                                  requireTitle
-                                />
-                                <OverflowMenuItem itemText="Option 3" />
-                                <OverflowMenuItem itemText="Option 4" hasDivider />
-                              </OverflowMenu>
-
-                            </TableCell>
-
-                          </TableRow>
-                        ) ) }
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                ) }
+                  {/* <Pagination
+                    backwardText="Previous page"
+                    forwardText="Next page"
+                    itemsPerPageText="Items per page:"
+                    page={1}
+                    pageNumberText="Page Number"
+                    pageSize={10}
+                    pageSizes={[10, 20, 30, 40, 50]}
+                    totalItems={this.state.rowData.length}
+                  /> */}
+                </TableContainer>
+              )}
             </DataTable>
-
-
-
-
-
-
           </div>
         </div>
       </div>
