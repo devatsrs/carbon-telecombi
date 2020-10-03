@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import {
+import
+{
   SideNav,
   SideNavItems,
   SideNavLink,
@@ -23,40 +24,40 @@ const Fade16 = () => (
   </svg>
 );
 
-export default class Sidebar extends Component {
-  render(props) {
+export default class Sidebar extends Component
+{
+  render ( props )
+  {
     return (
       <SideNav
         aria-label="Side navigation"
         isRail
-        expanded={this.props.isSideNavExpanded}
+        expanded={ this.props.isSideNavExpanded }
       >
         <SideNavItems>
-          <SideNavMenu renderIcon={Fade16} title="Category title">
+          <SideNavMenu renderIcon={ Fade16 } title="Dashboard">
+            <SideNavMenuItem href="#">Dashboard 1</SideNavMenuItem>
+            <SideNavMenuItem aria-current="page" href="#">Dashboard 2</SideNavMenuItem>
+            <SideNavMenuItem href="#">Dashboard 3</SideNavMenuItem>
+          </SideNavMenu>
+          <SideNavMenu renderIcon={ Fade16 } title="Category title">
             <SideNavMenuItem href="#">Link</SideNavMenuItem>
             <SideNavMenuItem aria-current="page" href="#">
               Link
             </SideNavMenuItem>
             <SideNavMenuItem href="#">Link</SideNavMenuItem>
           </SideNavMenu>
-          <SideNavMenu renderIcon={Fade16} title="Category title">
+          <SideNavMenu renderIcon={ Fade16 } title="Category title">
             <SideNavMenuItem href="#">Link</SideNavMenuItem>
             <SideNavMenuItem aria-current="page" href="#">
               Link
             </SideNavMenuItem>
             <SideNavMenuItem href="#">Link</SideNavMenuItem>
           </SideNavMenu>
-          <SideNavMenu renderIcon={Fade16} title="Category title">
-            <SideNavMenuItem href="#">Link</SideNavMenuItem>
-            <SideNavMenuItem aria-current="page" href="#">
-              Link
-            </SideNavMenuItem>
-            <SideNavMenuItem href="#">Link</SideNavMenuItem>
-          </SideNavMenu>
-          <SideNavLink renderIcon={Fade16} href="#">
+          <SideNavLink renderIcon={ Fade16 } href="#">
             Link
           </SideNavLink>
-          <SideNavLink renderIcon={Fade16} href="#">
+          <SideNavLink renderIcon={ Fade16 } href="#">
             Link
           </SideNavLink>
         </SideNavItems>

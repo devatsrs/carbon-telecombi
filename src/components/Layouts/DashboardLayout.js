@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
-import {
+import
+{
   Header,
   HeaderMenuButton,
   HeaderName,
@@ -10,6 +11,7 @@ import {
   HeaderGlobalAction,
   SkipToContent,
   Content,
+  Grid
 } from "carbon-components-react";
 
 import { Search20, Notification20, AppSwitcher20 } from "@carbon/icons-react";
@@ -18,10 +20,13 @@ import { Route, Switch } from "react-router-dom";
 import Accounts from "../Accounts";
 import Sidebar from "../Sidebar/Sidebar";
 import { header_bar_links } from "../../helper/header_bar_links";
+import AccountsEdit from "../Accounts/edit";
 
-export default class DashboardLayout extends Component {
-  constructor(props) {
-    super(props);
+export default class DashboardLayout extends Component
+{
+  constructor( props )
+  {
+    super( props );
     // Don't call this.setState() here!
     this.state = { isSideNavExpanded: false };
     //this.handleClick = this.handleClick.bind(this);
@@ -30,16 +35,19 @@ export default class DashboardLayout extends Component {
     let content_style = {
       height: "100%",
     };
-    if (useResponsiveOffset) {
+    if( useResponsiveOffset )
+    {
       content_style.width = "100%";
     }
   }
 
-  onClickSideNavExpand = () => {
-    this.setState({ isSideNavExpanded: !this.state.isSideNavExpanded });
+  onClickSideNavExpand = () =>
+  {
+    this.setState( { isSideNavExpanded: !this.state.isSideNavExpanded } );
   };
 
-  render(props) {
+  render ( props )
+  {
     return (
       <>
         <Header aria-label="IBM Platform Name">
@@ -47,62 +55,69 @@ export default class DashboardLayout extends Component {
           <HeaderMenuButton
             aria-label="Open menu"
             isCollapsible
-            onClick={this.onClickSideNavExpand}
-            isActive={this.state.isSideNavExpanded}
+            onClick={ this.onClickSideNavExpand }
+            isActive={ this.state.isSideNavExpanded }
           />
           <HeaderName href="#" prefix="IBM">
             [Platform]
           </HeaderName>
           <HeaderNavigation aria-label="IBM [Platform]">
-            {header_bar_links.map((item, i) => (
-              <HeaderMenuItem key={i} href={item.link}>
-                {item.title}
+            { header_bar_links.map( ( item, i ) => (
+              <HeaderMenuItem key={ i } href={ item.link }>
+                {item.title }
               </HeaderMenuItem>
-            ))}
+            ) ) }
           </HeaderNavigation>
 
           <HeaderGlobalBar>
             <HeaderGlobalAction
               aria-label="Search"
-              onClick={() => alert("search click")}
+              onClick={ () => alert( "search click" ) }
             >
               <Search20 />
             </HeaderGlobalAction>
             <HeaderGlobalAction
               aria-label="Notifications"
-              onClick={() => alert("notification click")}
+              onClick={ () => alert( "notification click" ) }
             >
               <Notification20 />
             </HeaderGlobalAction>
             <HeaderGlobalAction
               aria-label="App Switcher"
-              onClick={() => alert("app-switcher click")}
+              onClick={ () => alert( "app-switcher click" ) }
             >
               <AppSwitcher20 />
             </HeaderGlobalAction>
           </HeaderGlobalBar>
         </Header>
         <aside className="bx--side-nav">
-          <Sidebar isSideNavExpanded={this.state.isSideNavExpanded}></Sidebar>
+          <Sidebar isSideNavExpanded={ this.state.isSideNavExpanded }></Sidebar>
         </aside>
-        <Content id="main-content" style={this.content_style}>
+        <Content id="main-content" style={ this.content_style }>
           <Switch>
             <Route
               exact
               path="/accounts"
-              render={(props) => <Accounts {...props} />}
+              render={ ( props ) => <Accounts { ...props } /> }
             />
             <Route
               exact
               path="/dashboard"
-              render={(props) => <Dashboard {...props} />}
+              render={ ( props ) => <Dashboard { ...props } /> }
             />
             <Route
               exact
               path="/accounts"
-              render={(props) => <Accounts {...props} />}
+              render={ ( props ) => <Accounts { ...props } /> }
             />
+            <Route
+              exact
+              path="/account/{id}/edit"
+              render={ ( props ) => <AccountsEdit { ...props } /> }
+            />
+
           </Switch>
+
         </Content>
       </>
     );
