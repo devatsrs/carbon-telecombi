@@ -25,11 +25,11 @@ import {
 export default (props) => {
   var initialRows = props.rows;
   var inititalPaginationRows = [];
-  for (let i = 0; i < 3; i++) {
-    initialRows.forEach((row) => {
-      inititalPaginationRows.push({ ...row, id: row.id + i });
-    });
-  }
+
+  initialRows.forEach((key, row) => {
+    inititalPaginationRows.push({ ...row, id: row.id });
+  });
+
   inititalPaginationRows = inititalPaginationRows.slice(0, 120);
 
   return (
