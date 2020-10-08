@@ -9,10 +9,12 @@
     "carbon-components": "^10.16.0",
     "carbon-components-react": "^7.16.0",
     "carbon-icons": "^7.0.7",
+    "history": "^5.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "react-select": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
