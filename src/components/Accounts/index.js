@@ -1,5 +1,4 @@
-import
-{
+import {
   DataTable,
   Table,
   TableBody,
@@ -27,7 +26,6 @@ import React, { Component } from "react";
 import accounts_data from "../../helper/faker/accounts";
 import { ArrowRight16, Edit16 } from "@carbon/icons-react";
 
-
 /**
  *
  *
@@ -38,63 +36,51 @@ import { ArrowRight16, Edit16 } from "@carbon/icons-react";
  * https://react.carbondesignsystem.com/?path=/docs/datatable-batch-actions--usage
  * https://www.carbondesignsystem.com/components/data-table/usage/
  */
-import
-{
+import {
   Delete16 as Delete,
   Save16 as Save,
   Download16 as Download,
 } from "@carbon/icons-react";
 
-export default class Accounts extends Component
-{
-  constructor( props )
-  {
-    super();
-  }
+export default class Accounts extends Component {
+  // constructor(props) {
+  //   super(props);
+  // }
   state = {
     rowData: [],
     headerData: [],
     paginationPage: 1,
     paginationPageSize: 50,
     paginationPageSizes: [10, 20, 30, 40, 50],
-
   };
 
-  componentDidMount ()
-  {
+  componentDidMount() {
     let headerData = [];
-    Object.entries( accounts_data[0] ).forEach( ( [key, value] ) =>
-    {
-      if( key !== 'id' )
-      {
-
-        headerData.push( { key: key, header: key } );
+    Object.entries(accounts_data[0]).forEach(([key, value]) => {
+      if (key !== "id") {
+        headerData.push({ key: key, header: key });
       }
-    } );
+    });
 
-    this.setState( { rowData: accounts_data, headerData: headerData } );
+    this.setState({ rowData: accounts_data, headerData: headerData });
   }
-  action ( msg )
-  {
+  action(msg) {
     // alert(msg);
   }
-  batchActionClick ( msg )
-  {
+  batchActionClick(msg) {
     //alert(msg);
   }
 
-  handlePaginationChange = ( e ) =>
-  {
-    console.log( e );
+  handlePaginationChange = (e) => {
+    console.log(e);
 
-    this.setState( {
+    this.setState({
       paginationPage: e.page,
       paginationPageSize: e.pageSize,
-    } );
+    });
   };
 
-  render ()
-  {
+  render(props) {
     //console.log(accounts_data);
     //    console.log(accounts_data[0]);
 
@@ -102,14 +88,14 @@ export default class Accounts extends Component
       <div>
         <h2>Accounts</h2>
         <DataTable
-          rows={ this.state.rowData }
-          headers={ this.state.headerData }
-          page={ 1 }
-          pageSize={ this.state.paginationPageSize }
+          rows={this.state.rowData}
+          headers={this.state.headerData}
+          page={1}
+          pageSize={this.state.paginationPageSize}
           isSortable
           size="compact"
         >
-          { ( {
+          {({
             rows,
             headers,
             getHeaderProps,
@@ -121,8 +107,7 @@ export default class Accounts extends Component
             selectedRows,
             getTableProps,
             getTableContainerProps,
-            getPaginationProps = () =>
-            {
+            getPaginationProps = () => {
               const { paginationPage, paginationPageSize } = this.state;
 
               return {
@@ -131,18 +116,15 @@ export default class Accounts extends Component
                 //onChange: this.handlePaginationChange,
               };
             },
-            getCurrentPageRows = ( rows ) =>
-            {
+            getCurrentPageRows = (rows) => {
               let lastItemIndex = 0;
 
               let { paginationPage, paginationPageSize } = this.state;
 
-              if( paginationPage === 1 || rows.length <= paginationPageSize )
-              {
+              if (paginationPage === 1 || rows.length <= paginationPageSize) {
                 lastItemIndex = paginationPageSize;
                 paginationPage = 1;
-              } else
-              {
+              } else {
                 lastItemIndex = paginationPageSize * paginationPage;
               }
               // If lastItemIndex is larger than rows.length, it wont break
@@ -155,139 +137,142 @@ export default class Accounts extends Component
               // console.log( "rows " + rows.length );
 
               return rows.slice(
-                ( paginationPage - 1 ) * paginationPageSize,
+                (paginationPage - 1) * paginationPageSize,
                 lastItemIndex
               );
             },
-          } ) => (
-              <TableContainer
-                title=""
-                description=""
-                { ...getTableContainerProps() }
-              >
-                <TableToolbar { ...getToolbarProps() }>
-                  <TableBatchActions { ...getBatchActionProps() }>
-                    <TableBatchAction
-                      tabIndex={
-                        getBatchActionProps().shouldShowBatchActions ? 0 : -1
-                      }
-                      renderIcon={ Delete }
-                      onClick={ this.batchActionClick( selectedRows ) }
-                    >
-                      Delete{ " " }
-                    </TableBatchAction>
-                    <TableBatchAction
-                      tabIndex={
-                        getBatchActionProps().shouldShowBatchActions ? 0 : -1
-                      }
-                      renderIcon={ Save }
-                      onClick={ this.batchActionClick( selectedRows ) }
-                    >
-                      Save{ " " }
-                    </TableBatchAction>
-                    <TableBatchAction
-                      tabIndex={
-                        getBatchActionProps().shouldShowBatchActions ? 0 : -1
-                      }
-                      renderIcon={ Download }
-                      onClick={ this.batchActionClick( selectedRows ) }
-                    >
-                      Download{ " " }
-                    </TableBatchAction>
-                  </TableBatchActions>
-                  <TableToolbarContent>
-                    <TableToolbarSearch
-                      defaultExpanded
-                      tabIndex={
-                        getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                      }
-                      onChange={ onInputChange }
-                    />
-                    <TableToolbarMenu
-                      tabIndex={
-                        getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                      }
-                    >
-                      <TableToolbarAction onClick={ () => alert( "Alert 1" ) }>
-                        { " " }
-                      Action 1{ " " }
-                      </TableToolbarAction>
-                      <TableToolbarAction onClick={ () => alert( "Alert 2" ) }>
-                        { " " }
-                      Action 2{ " " }
-                      </TableToolbarAction>
-                      <TableToolbarAction onClick={ () => alert( "Alert 3" ) }>
-                        Action 3
+          }) => (
+            <TableContainer
+              title=""
+              description=""
+              {...getTableContainerProps()}
+            >
+              <TableToolbar {...getToolbarProps()}>
+                <TableBatchActions {...getBatchActionProps()}>
+                  <TableBatchAction
+                    tabIndex={
+                      getBatchActionProps().shouldShowBatchActions ? 0 : -1
+                    }
+                    renderIcon={Delete}
+                    onClick={this.batchActionClick(selectedRows)}
+                  >
+                    Delete{" "}
+                  </TableBatchAction>
+                  <TableBatchAction
+                    tabIndex={
+                      getBatchActionProps().shouldShowBatchActions ? 0 : -1
+                    }
+                    renderIcon={Save}
+                    onClick={this.batchActionClick(selectedRows)}
+                  >
+                    Save{" "}
+                  </TableBatchAction>
+                  <TableBatchAction
+                    tabIndex={
+                      getBatchActionProps().shouldShowBatchActions ? 0 : -1
+                    }
+                    renderIcon={Download}
+                    onClick={this.batchActionClick(selectedRows)}
+                  >
+                    Download{" "}
+                  </TableBatchAction>
+                </TableBatchActions>
+                <TableToolbarContent>
+                  <TableToolbarSearch
+                    defaultExpanded
+                    tabIndex={
+                      getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                    }
+                    onChange={onInputChange}
+                  />
+                  <TableToolbarMenu
+                    tabIndex={
+                      getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                    }
+                  >
+                    <TableToolbarAction onClick={() => alert("Alert 1")}>
+                      {" "}
+                      Action 1{" "}
                     </TableToolbarAction>
-                    </TableToolbarMenu>
-                    <Button
-                      tabIndex={
-                        getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                      }
-                      onClick={ this.action( "Add new row" ) }
-                      size="small"
-                      kind="primary"
-                    >
-                      Add new
+                    <TableToolbarAction onClick={() => alert("Alert 2")}>
+                      {" "}
+                      Action 2{" "}
+                    </TableToolbarAction>
+                    <TableToolbarAction onClick={() => alert("Alert 3")}>
+                      Action 3
+                    </TableToolbarAction>
+                  </TableToolbarMenu>
+                  <Button
+                    tabIndex={
+                      getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                    }
+                    onClick={this.action("Add new row")}
+                    size="small"
+                    kind="primary"
+                  >
+                    Add new
                   </Button>
-                  </TableToolbarContent>
-                </TableToolbar>
-                <Table { ...getTableProps() }>
-                  <TableHead>
-                    <TableRow>
-                      <TableSelectAll { ...getSelectionProps() } />
-                      { headers.map( ( header, i ) => (
-                        <TableHeader key={ i } { ...getHeaderProps( { header } ) }>
-                          {header.header }
-                        </TableHeader>
-                      ) ) }
-                      <TableHeader />
+                </TableToolbarContent>
+              </TableToolbar>
+              <Table {...getTableProps()}>
+                <TableHead>
+                  <TableRow>
+                    <TableSelectAll {...getSelectionProps()} />
+                    {headers.map((header, i) => (
+                      <TableHeader key={i} {...getHeaderProps({ header })}>
+                        {header.header}
+                      </TableHeader>
+                    ))}
+                    <TableHeader />
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {getCurrentPageRows(rows).map((row, i) => (
+                    <TableRow key={i} {...getRowProps({ row })}>
+                      <TableSelectRow {...getSelectionProps({ row })} />
+                      {row.cells.map((cell) => (
+                        <TableCell key={cell.id}>{cell.value}</TableCell>
+                      ))}
+                      <TableCell className="bx--table-column-menu">
+                        <Button
+                          kind="ghost"
+                          hasIconOnly
+                          renderIcon={ArrowRight16}
+                          iconDescription="View Account  "
+                          size="small"
+                          tooltipPosition="right"
+                        />
+
+                        <Button
+                          style={{ paddingTop: "10px" }}
+                          kind="ghost"
+                          hasIconOnly
+                          renderIcon={Edit16}
+                          iconDescription="Edit Account  "
+                          size="small"
+                          tooltipPosition="right"
+                          tooltipDirection="bottom"
+                          onClick={() =>
+                            this.props.history.push(
+                              "/account/" + row.id + "/edit"
+                            )
+                          }
+                        />
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    { getCurrentPageRows( rows ).map( ( row, i ) => (
-                      <TableRow key={ i } { ...getRowProps( { row } ) }>
-                        <TableSelectRow { ...getSelectionProps( { row } ) } />
-                        {row.cells.map( ( cell ) => (
-                          <TableCell key={ cell.id }>{ cell.value }</TableCell>
-                        ) ) }
-                        <TableCell className="bx--table-column-menu">
-
-                          <Button
-                            kind="ghost"
-                            hasIconOnly
-                            renderIcon={ ArrowRight16 }
-                            iconDescription="View"
-                            size="small"
-                            tooltipPosition="left"
-
-                          />
-
-                          <Button
-                            kind="ghost"
-                            hasIconOnly
-                            renderIcon={ Edit16 }
-                            iconDescription="Add to selection"
-                            size="small"
-                            tooltipPosition="left"
-
-                          />
-
-                        </TableCell>
-                      </TableRow>
-                    ) ) }
-                  </TableBody>
-                </Table>
-                <Pagination
-                  // {...getPaginationProps}
-                  page={ this.state.paginationPage }
-                  pageSize={ this.state.paginationPageSize }
-                  pageSizes={ this.state.paginationPageSizes }
-                  totalItems={ rows.length }
-                  onChange={ ( event ) => this.handlePaginationChange( event ) }
-                />
-              </TableContainer>
-            ) }
+                  ))}
+                </TableBody>
+              </Table>
+              <Pagination
+                // {...getPaginationProps}
+                page={this.state.paginationPage}
+                pageSize={this.state.paginationPageSize}
+                pageSizes={this.state.paginationPageSizes}
+                totalItems={rows.length}
+                onChange={(event) => this.handlePaginationChange(event)}
+              />
+            </TableContainer>
+          )}
         </DataTable>
       </div>
     );
